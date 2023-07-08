@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.Scanner;
 
 import javax.swing.plaf.nimbus.State;
 
@@ -43,12 +44,31 @@ class CRUDOperation {
     void Create() throws SQLException {
         PreparedStatement statement = null;
         try {
-            String query = "Insert into person (personid, personname) values (?,?)";
-            statement = conn.prepareStatement(query);
-            statement.setInt(1, 1);
-            statement.setString(2, "Mandip Timsina");
-            statement.executeUpdate();
-            System.out.println("The information are recorded successfully");
+            // String query = "Insert into person (personid, personname) values (?,?)";
+            // statement = conn.prepareStatement(query);
+            // statement.setInt(1, 1);
+            // statement.setString(2, "Mandip Timsina");
+            // statement.executeUpdate();
+            // System.out.println("The information are recorded successfully");
+
+            Scanner scanner = new Scanner(System.in);
+            boolean givenValidation = false;
+            while (!givenValidation) {
+                System.out.println("Enter your name here: ");
+                String name = scanner.nextLine();
+                if (name instanceof String) {
+                    String query = "Insert into person (personid, personname) values (?, ?)";
+                    statement = conn.prepareStatement(query);
+                    statement.setInt(1, 2);
+                    statement.setString(2, name);
+                    statement.executeUpdate();
+                    System.out.println("The information which you have enetred is recorded successfully");
+                    givenValidation = true;
+                } else {
+                    System.out.println("Invalid input. Please try again:");
+                }
+            }
+
         } finally {
             if (statement != null) {
                 statement.close();
